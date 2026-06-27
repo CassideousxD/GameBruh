@@ -1,4 +1,4 @@
-# GameBruh
+# Game Boy Emulator
 
 A Nintendo Game Boy emulator written in **C++** using **SDL3**, developed to gain a deeper understanding of computer architecture, hardware emulation, graphics rendering, memory management, and low-level systems programming.
 
@@ -28,6 +28,7 @@ The emulator recreates the core hardware of the original Nintendo Game Boy, incl
 * Background rendering
 * Window rendering
 * Sprite rendering
+<<<<<<< HEAD
 * Timer emulation
 * Interrupt handling
 * DMA transfers
@@ -36,9 +37,16 @@ The emulator recreates the core hardware of the original Nintendo Game Boy, incl
 * Compatibility with commercial ROM-only games
 * Successfully passes all Blargg CPU test ROMs
 *  Audio Processing Unit (APU)
+<<<<<<< HEAD
 * Scanline-based rendering
 * LCD timing
 * VBlank and LCD interrupts
+=======
+=======
+* Scanline-based rendering
+* LCD timing
+* VBlank and LCD interrupts
+
 
 ### Timers & Interrupts
 
