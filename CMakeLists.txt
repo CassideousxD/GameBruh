@@ -11,13 +11,16 @@ find_package(SDL3 REQUIRED)
 
 add_executable(
     GameBruh
-
     src/main.cpp
-
     src/GameBoy.cpp
     src/cpu.cpp
     src/memory.cpp
     src/cartridge.cpp
+    src/romtypes/ROMOnly.cpp
+    src/romtypes/MBC1.cpp
+    src/romtypes/MBC2.cpp
+    src/romtypes/MBC3.cpp
+    src/romtypes/MBC5.cpp
     src/PPU.cpp
     src/Timer.cpp
     src/renderer.cpp

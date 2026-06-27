@@ -123,6 +123,13 @@ uint8_t Memory::readByte(uint16_t address) const
         return cartridge->readByte(address);
     }
 
+    if(address >= 0xA000 && address <= 0xBFFF)
+    {
+        if(cartridge != nullptr)
+            return cartridge->readByte(address);
+        return 0xFF;
+    }
+
     if(address == 0xFF01)
     {
         return serialData;
@@ -209,7 +216,18 @@ uint8_t Memory::readByte(uint16_t address) const
 void Memory::writeByte(uint16_t address, uint8_t value)
 {
     if(address <= 0x7FFF)
+    {
+        if(cartridge != nullptr)
+            cartridge->writeByte(address, value);
         return;
+    }
+
+    if(address >= 0xA000 && address <= 0xBFFF)
+    {
+        if(cartridge != nullptr)
+            cartridge->writeByte(address, value);
+        return;
+    }
 
     if(address == 0xFF50)
     {

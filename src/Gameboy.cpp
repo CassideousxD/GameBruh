@@ -1,16 +1,17 @@
 #include "Gameboy.h"
 #include <iostream>
 
-GameBoy::GameBoy() : cpu(memory), timer(memory), apu(memory), ppu(memory), debugger(cpu, memory), inputManager(memory), running(true)
+GameBoy::GameBoy() : memory(), cpu(memory), timer(memory), apu(memory), ppu(memory), debugger(cpu, memory), inputManager(memory), running(true)
 {
-    memory.connectCartridge(&cartridge);
-    memory.connectAPU(&apu);    // ADD THIS
-
-    if(!cartridge.loadROM("../ROM/Tetris (World) (Rev 1).gb"))
+    cartridge = Cartridge::create("../ROM/Pokemon - Red Version (USA, Europe) (SGB Enhanced).gb");
+    if(!cartridge)
     {
-        std::cerr << "Failed to load ROM!" << std::endl;
+        std::cerr << "Failed to load ROM!\n";
         running = false;
+        return;
     }
+    memory.connectCartridge(cartridge.get());
+    memory.connectAPU(&apu);
     debugger.disableTracing();
 }
 

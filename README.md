@@ -1,28 +1,34 @@
-# GameBruh
+# Game Boy Emulator
 
-*A Nintendo Game Boy (DMG) emulator written from scratch in modern C++ using SDL3 and CMake.*
+A Nintendo Game Boy emulator written in **C++** using **SDL3**, developed to gain a deeper understanding of computer architecture, hardware emulation, graphics rendering, memory management, and low-level systems programming.
 
-## Overview
-
-GameBruh is an open-source Nintendo Game Boy emulator developed entirely from scratch as a personal systems programming project. The objective of this project is to accurately emulate the original Game Boy hardware while gaining a deeper understanding of computer architecture, low-level programming, and emulator design.
-
-The emulator implements the major hardware components of the original Game Boy, including the CPU, memory subsystem, graphics processor (PPU), timers, interrupts, DMA, and input handling. Every subsystem has been implemented manually based on publicly available hardware documentation without relying on existing emulator implementations.
-
-In addition to emulation, this repository serves as a learning resource. The accompanying documentation explains the architecture of the Game Boy, the design decisions behind the emulator, and the lessons learned throughout development.
+The emulator recreates the core hardware of the original Nintendo Game Boy, including the CPU, memory subsystem, graphics processor (PPU), timers, interrupts, audio, input handling, and multiple Memory Bank Controllers (MBCs).
 
 ---
 
 ## Features
 
-### Implemented
+### CPU
 
-* CPU instruction emulation
-* CB-prefixed instruction support
-* Accurate CPU flag handling
-* Complete Game Boy memory map
+* Complete Game Boy CPU instruction set
+* CB-prefixed instructions
+* Register and flag emulation
+* Stack operations
+* Control flow instructions
+
+### Memory
+
+* Full 64 KB memory map
+* Memory-mapped I/O
+* DMA transfers
+* Hardware register initialization
+
+### Graphics (PPU)
+
 * Background rendering
 * Window rendering
 * Sprite rendering
+<<<<<<< HEAD
 * Timer emulation
 * Interrupt handling
 * DMA transfers
@@ -31,130 +37,183 @@ In addition to emulation, this repository serves as a learning resource. The acc
 * Compatibility with commercial ROM-only games
 * Successfully passes all Blargg CPU test ROMs
 *  Audio Processing Unit (APU)
+=======
+* Scanline-based rendering
+* LCD timing
+* VBlank and LCD interrupts
+>>>>>>> 9d84973 (feat: implement audio, input handling, and MBC support)
 
-### Planned
+### Timers & Interrupts
 
-* Additional compatibility improvements
-* MBC1 support
-* MBC2 support
-* MBC3 support
-* MBC5 support
-* Battery-backed save files
-* Save states
-* Debugging tools
-* Link cable emulation
+* DIV and TIMA timers
+* Interrupt handling
+* Cycle-based synchronization
 
----
+### Input
 
-## Requirements
+* Joypad emulation
+* Keyboard controls
 
-* C++17 compatible compiler
-* CMake 3.20 or later
-* SDL3
+### Audio
 
----
+* Audio Processing Unit (APU)
+* Real-time sound output
 
-## Building
+### Cartridge Support
 
-Clone the repository:
-
-```bash
-git clone https://github.com/<username>/GameBruh.git
-cd GameBruh
-```
-
-Generate the build files:
-
-```bash
-cmake -B build
-```
-
-Compile the project:
-
-```bash
-cmake --build build
-```
+* ROM Only
+* MBC1
+* MBC2
+* MBC3
+* MBC5
 
 ---
 
-## Running
+## Controls
 
-Launch the generated executable and load a compatible Game Boy ROM.
-
-Only ROM-only cartridges are currently supported. Support for Memory Bank Controllers (MBCs) will be added in future releases.
-
----
-
-## Default Controls
-
-| Keyboard    | Game Boy |
-| ----------- | -------- |
-| W           | Up       |
-| A           | Left     |
-| S           | Down     |
-| D           | Right    |
-| J           | A        |
-| K           | B        |
-| Enter       | Start    |
-| Right Shift | Select   |
-| Escape      | Quit     |
+| Keyboard    | Game Boy Button |
+| ----------- | --------------- |
+| W           | Up              |
+| A           | Left            |
+| S           | Down            |
+| D           | Right           |
+| J           | A               |
+| K           | B               |
+| Enter       | Start           |
+| Right Shift | Select          |
 
 ---
 
-## Repository Structure
+## Project Structure
 
 ```text
-GameBruh/
-├── src/                  Source files
-├── include/              Header files
-├── docs/                 Project documentation
-├── screenshots/          Screenshots and media
+GameBoyEmulator/
+│
+├── src/
+├── include/
+├── docs/
+│   ├── DEVELOPMENT_LOG.md
+│   └── lessons/
+├── ROM/
+├── assets/
 ├── CMakeLists.txt
-├── LICENSE
 └── README.md
 ```
 
 ---
 
+## Building the Project
+
+### Requirements
+
+* C++17 compatible compiler
+* CMake (3.15 or later)
+* SDL3
+
+### Clone the Repository
+
+```bash
+git clone https://github.com/CassideousxD/GameBruh.git
+cd GameBruh
+```
+
+### Build
+
+```bash
+mkdir build
+cd build
+
+cmake ..
+cmake --build .
+```
+
+---
+
+## Running the Emulator
+
+From the build directory:
+
+```bash
+./GameBruh
+```
+
+or
+
+```bash
+./bin/GameBruh
+```
+
+(depending on your build configuration)
+
+---
+
+## Loading ROMs
+
+Place Game Boy ROM files (`.gb`) inside the `ROM/` directory.
+
+Example:
+
+```text
+ROM/
+├── Tetris.gb
+├── DrMario.gb
+├── PokemonRed.gb
+└── Zelda.gb
+```
+
+Launch the emulator and load the desired ROM.
+
+---
+
 ## Documentation
 
-The `docs` directory contains detailed documentation covering both the emulator implementation and the concepts learned during development.
+Detailed documentation is available in the `docs` directory.
 
-| Document           | Description                                                                                                                         |
-| ------------------ | ----------------------------------------------------------------------------------------------------------------------------------- |
-| DEVELOPMENT_LOG.md | Chronological record of the project's development, implementation milestones, challenges, and solutions.                            |
-| LESSONS_LEARNED.md | Concepts and techniques learned throughout the development process, intended as a learning resource for future emulator developers. |
-| ARCHITECTURE.md    | High-level overview of the emulator architecture and component interactions.                                                        |
-| ROADMAP.md         | Planned features and future development goals.                                                                                      |
-
-Additional subsystem documentation will be added as development progresses.
+| File               | Description                                         |
+| ------------------ | --------------------------------------------------- |
+| DEVELOPMENT_LOG.md | Development milestones and progress                 |
+| lessons/           | Detailed explanations of Game Boy hardware concepts |
 
 ---
 
-## Testing
+## Learning Objectives
 
-The emulator has been validated using the following:
+This project was developed to better understand:
 
-* Blargg CPU Test ROMs
-* Tetris
-* Dr. Mario
-
-Further compatibility testing is ongoing.
+* Computer Architecture
+* Hardware Emulation
+* CPU Design
+* Memory Management
+* Interrupt Handling
+* Graphics Rendering
+* Digital Audio
+* Object-Oriented Design
+* Low-Level Systems Programming
 
 ---
 
-## Objectives
+## Future Improvements
 
-The primary goals of this project are:
+* Save states
+* Pause and resume
+* ROM selection menu
+* Screenshot support
+* Controller support
+* Display customization
+* Performance optimizations
+* Expanded ROM compatibility
 
-* Accurately emulate the Nintendo Game Boy hardware
-* Develop a strong understanding of low-level computer architecture
-* Explore emulator development techniques
-* Apply modern C++ design principles
-* Create comprehensive educational documentation for future learners
+---
+
+## References
+
+* Pan Docs
+* Game Boy CPU Manual
+* Blargg Test ROMs
+* Mooneye Test Suite
 
 ---
 
 ## License
 
-This project is licensed under the MIT License. See the `LICENSE` file for additional information.
+This project is licensed under the MIT License.

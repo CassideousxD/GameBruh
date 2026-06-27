@@ -3,7 +3,7 @@
 #include "Joypad.h"
 #include <cstdint>
 
-class APU;  // forward declare
+class APU; 
 
 class Memory
 {
@@ -27,7 +27,7 @@ public:
     void setWX(uint8_t value);
     void setWY(uint8_t value);
     void connectCartridge(Cartridge* cartridge);
-    void connectAPU(APU* apu);          // ADD THIS
+    void connectAPU(APU* apu);         
     void initializeHardwareRegisters();
     void doDMATransfer(uint8_t value);
     void pressButton(Button button);
@@ -48,7 +48,7 @@ private:
     uint8_t wx;
     uint8_t wy;
     Cartridge* cartridge;
-    APU* apu = nullptr;                 // ADD THIS
+    APU* apu = nullptr;                 
     Joypad joypad;
     uint8_t serialData;
     uint8_t serialControl;

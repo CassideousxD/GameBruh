@@ -1,6 +1,4 @@
 #pragma once
-
-#include "Cartridge.h"
 #include "Memory.h"
 #include "CPU.h"
 #include "PPU.h"
@@ -9,12 +7,13 @@
 #include "Debugger.h"
 #include "InputManager.h"
 #include "APU.h"
+#include "Cartridge.h"
+#include <memory>
 
 class GameBoy
 {
 private:
-
-    Cartridge cartridge;
+    std::unique_ptr<Cartridge> cartridge; 
     Memory memory;
     CPU cpu;
     Timer timer;
@@ -26,7 +25,6 @@ private:
     InputManager inputManager;
 
 public:
-
     GameBoy();
     void run();
 };
