@@ -1,4 +1,4 @@
-# Game Boy Emulator
+# GameBruh
 
 A Nintendo Game Boy emulator written in **C++** using **SDL3**, developed to gain a deeper understanding of computer architecture, hardware emulation, graphics rendering, memory management, and low-level systems programming.
 
