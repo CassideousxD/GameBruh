@@ -1,4 +1,5 @@
 #include "Memory.h"
+#include "APU.h" 
 #include <algorithm>
 #include <iostream>
 #include <fstream>
@@ -97,6 +98,12 @@ void Memory::connectCartridge(Cartridge* cartridge)
 {
     this->cartridge = cartridge;
 }
+
+void Memory::connectAPU(APU* apu)
+{
+    this->apu = apu;
+}
+
 
 uint8_t Memory::readByte(uint16_t address) const
 {
@@ -202,15 +209,13 @@ uint8_t Memory::readByte(uint16_t address) const
 void Memory::writeByte(uint16_t address, uint8_t value)
 {
     if(address <= 0x7FFF)
-    {
         return;
-    }
 
-    if (address == 0xFF50)
+    if(address == 0xFF50)
     {
-        if (value != 0x00)
+        if(value != 0x00)
         {
-            bootRomEnabled = false; 
+            bootRomEnabled = false;
             std::cout << "Boot ROM unmapped. Control handed over to Cartridge!" << std::endl;
         }
         return;
@@ -234,17 +239,15 @@ void Memory::writeByte(uint16_t address, uint8_t value)
         if(serialControl == 0x81)
         {
             std::cout << static_cast<char>(serialData) << std::flush;
-            serialData = 0xFF;      
-            serialControl &= ~0x80;  
-            interruptFlag |= 0x08;  
+            serialData = 0xFF;
+            serialControl &= ~0x80;
+            interruptFlag |= 0x08;
         }
         return;
     }
 
     if(address >= 0xFEA0 && address <= 0xFEFF)
-    {
         return;
-    }
 
     if(address == 0xFFFF)
     {
@@ -252,35 +255,11 @@ void Memory::writeByte(uint16_t address, uint8_t value)
         return;
     }
 
-    if(address == 0xFF42)
-    {
-        scy = value;
-        return;
-    }
-
-    if(address == 0xFF43)
-    {
-        scx = value;
-        return;
-    }
-
-    if(address == 0xFF4A)
-    {
-        wy = value;
-        return;
-    }
-
-    if(address == 0xFF4B)
-    {
-        wx = value;
-        return;
-    }
-
-    if(address == 0xFF44)
-    {
-        ly = 0;
-        return;
-    }
+    if(address == 0xFF42) { scy = value; return; }
+    if(address == 0xFF43) { scx = value; return; }
+    if(address == 0xFF4A) { wy = value; return; }
+    if(address == 0xFF4B) { wx = value; return; }
+    if(address == 0xFF44) { ly = 0; return; }
 
     if(address == 0xFF46)
     {
@@ -289,41 +268,12 @@ void Memory::writeByte(uint16_t address, uint8_t value)
         return;
     }
 
-    if(address == 0xFF04)
-    {
-        divRegister = 0x00;
-        return;
-    }
-
- if(address == 0xFF40)
-    {
-        lcdc = value;
-        return;
-    }
-
-    if(address == 0xFF05)
-    {
-        tima = value;
-        return;
-    }
-
-    if(address == 0xFF06)
-    {
-        tma = value;
-        return;
-    }
-
-    if(address == 0xFF07)
-    {
-        tac = value;
-        return;
-    }
-
-    if(address == 0xFF0F)
-    {
-        interruptFlag = value;
-        return;
-    }
+    if(address == 0xFF04) { divRegister = 0x00; return; }
+    if(address == 0xFF40) { lcdc = value; return; }
+    if(address == 0xFF05) { tima = value; return; }
+    if(address == 0xFF06) { tma = value; return; }
+    if(address == 0xFF07) { tac = value; return; }
+    if(address == 0xFF0F) { interruptFlag = value; return; }
 
     if(address >= 0xC000 && address <= 0xDDFF)
     {
@@ -339,7 +289,15 @@ void Memory::writeByte(uint16_t address, uint8_t value)
         return;
     }
 
+    // Write to memory first
     memory[address] = value;
+
+    // Then notify APU directly for sound registers
+    if(address >= 0xFF10 && address <= 0xFF3F)
+    {
+        if(apu != nullptr)
+            apu->writeRegister(address, value);
+    }
 }
 
 void Memory::doDMATransfer(uint8_t value)
@@ -365,7 +323,6 @@ void Memory::releaseButton(Button button)
 {
     joypad.release(button);
 }
-
 
 void Memory::incrementDIV()
 {

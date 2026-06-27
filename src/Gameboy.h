@@ -8,6 +8,7 @@
 #include "Renderer.h"
 #include "Debugger.h"
 #include "InputManager.h"
+#include "APU.h"
 
 class GameBoy
 {
@@ -17,6 +18,7 @@ private:
     Memory memory;
     CPU cpu;
     Timer timer;
+    APU apu;
     PPU ppu;
     Renderer renderer;
     Debugger debugger;

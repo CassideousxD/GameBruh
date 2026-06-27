@@ -3,6 +3,8 @@
 #include "Joypad.h"
 #include <cstdint>
 
+class APU;  // forward declare
+
 class Memory
 {
 public:
@@ -20,19 +22,18 @@ public:
     uint8_t getWX() const;
     uint8_t getWY() const;
     uint8_t getLCDC() const;
-
     void setSCX(uint8_t value);
     void setSCY(uint8_t value);
     void setWX(uint8_t value);
     void setWY(uint8_t value);
-
     void connectCartridge(Cartridge* cartridge);
+    void connectAPU(APU* apu);          // ADD THIS
     void initializeHardwareRegisters();
     void doDMATransfer(uint8_t value);
     void pressButton(Button button);
     void releaseButton(Button button);
-private:
 
+private:
     uint8_t memory[65536];
     uint8_t interruptEnable;
     uint8_t interruptFlag;
@@ -47,12 +48,13 @@ private:
     uint8_t wx;
     uint8_t wy;
     Cartridge* cartridge;
+    APU* apu = nullptr;                 // ADD THIS
     Joypad joypad;
     uint8_t serialData;
     uint8_t serialControl;
     uint8_t dma = 0;
     bool bootRomEnabled = true;
     uint8_t bootRom[256];
-    uint8_t buttonMatrix[2];    
+    uint8_t buttonMatrix[2];
     uint8_t joypadSelect;
 };

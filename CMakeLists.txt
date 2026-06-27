@@ -24,6 +24,7 @@ add_executable(
     src/debugger.cpp
     src/inputmanager.cpp
     src/joypad.cpp
+    src/APU.cpp
 )
 
 target_link_libraries(
