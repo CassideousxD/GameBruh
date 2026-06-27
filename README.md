@@ -28,7 +28,6 @@ The emulator recreates the core hardware of the original Nintendo Game Boy, incl
 * Background rendering
 * Window rendering
 * Sprite rendering
-<<<<<<< HEAD
 * Timer emulation
 * Interrupt handling
 * DMA transfers
@@ -37,11 +36,9 @@ The emulator recreates the core hardware of the original Nintendo Game Boy, incl
 * Compatibility with commercial ROM-only games
 * Successfully passes all Blargg CPU test ROMs
 *  Audio Processing Unit (APU)
-=======
 * Scanline-based rendering
 * LCD timing
 * VBlank and LCD interrupts
->>>>>>> 9d84973 (feat: implement audio, input handling, and MBC support)
 
 ### Timers & Interrupts
 
