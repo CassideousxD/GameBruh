@@ -30,10 +30,10 @@ In addition to emulation, this repository serves as a learning resource. The acc
 * ROM-only cartridge support
 * Compatibility with commercial ROM-only games
 * Successfully passes all Blargg CPU test ROMs
+*  Audio Processing Unit (APU)
 
 ### Planned
 
-* Audio Processing Unit (APU)
 * Additional compatibility improvements
 * MBC1 support
 * MBC2 support
