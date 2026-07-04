@@ -13,7 +13,7 @@
 class GameBoy
 {
 private:
-    std::unique_ptr<Cartridge> cartridge; 
+    std::unique_ptr<Cartridge> cartridge;
     Memory memory;
     CPU cpu;
     Timer timer;
@@ -23,6 +23,13 @@ private:
     Debugger debugger;
     bool running;
     InputManager inputManager;
+
+    // Speed control
+    double speedMultiplier = 1.0;
+    bool unlimitedSpeed   = false;
+
+    void setSpeed(double multiplier);
+    void toggleUnlimitedSpeed();
 
 public:
     GameBoy();

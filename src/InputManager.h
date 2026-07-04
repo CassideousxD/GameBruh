@@ -6,11 +6,22 @@ class InputManager
 {
 private:
     Memory& memory;
-    bool currentButtonStates[8] = { false };
+
+    SDL_Gamepad* gamepad = nullptr;
+
+    // deadzone for analog sticks (0-32767)
+    static constexpr int DEADZONE = 8000;
+
+    void openGamepad();
+    void closeGamepad();
+
+    bool isButtonPressed(Button button) const;
+    void updateKeyboard();
+    void updateGamepad();
 
 public:
     InputManager(Memory& memory);
+    ~InputManager();
     void update();
-    void handleKeyDown(SDL_Keycode key);
-    void handleKeyUp(SDL_Keycode key);
+    void handleEvent(const SDL_Event& event);
 };

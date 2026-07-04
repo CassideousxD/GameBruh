@@ -10,8 +10,10 @@ int main()
         return 1;
     }
 
-    GameBoy gameBoy;
-    gameBoy.run();
+    {
+        GameBoy gameBoy;  
+        gameBoy.run();
+    }
 
     SDL_Quit();
     return 0;
